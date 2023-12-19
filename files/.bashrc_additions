@@ -1,0 +1,18 @@
+
+# User specific environment and startup programs
+# Pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+# Default Editor
+export VISUAL=vim
+export EDITOR="$VISUAL"
+#export TERM=xterm-kitty
+
+# Stop GDB debug crap
+unset DEBUGINFOD_URLS
+
+# Custom prompt
+PS1='╭(\[\e[94m\]\u\[\e[0m\]@\[\e[91m\]\h\[\e[0m\])-(\[\e[92m\]\w\[\e[0m\])\n╰─> '
+   

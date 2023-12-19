@@ -1,0 +1,7 @@
+[Desktop Entry]
+Version=10.0
+Type=Application
+Terminal=false
+Icon=$HOME/Applications/ghidra_10.4/ghidra_icon.png
+Exec=sh $HOME/Applications/ghidra_10.4/ghidraRun
+Name=Ghidra
