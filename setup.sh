@@ -41,7 +41,6 @@ FIREFOX_EXTENSIONS=(
     "https://addons.mozilla.org/en-US/firefox/addon/simplelogin/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search" \
     "https://addons.mozilla.org/en-US/firefox/addon/darkreader/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search" \
     "https://addons.mozilla.org/en-US/firefox/addon/xbs/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search" \
-    "https://github.com/TheAssassin/AppImageLauncher/releases/download/v2.2.0/appimagelauncher-2.2.0-travis995.0f91801.x86_64.rpm" \
 )
 
 PACKAGES_REPO=(
@@ -54,6 +53,7 @@ PACKAGES_REPO=(
   "java-21-openjdk-devel" \
   "discord" \
   "gimp" \
+  "binutils" \
   "gdb" \
   "docker" \
   "docker-compose" \
@@ -67,8 +67,8 @@ PACKAGES_REPO=(
 
 PACKAGES_URL=(
   "https://dl.google.com/dl/linux/direct/google-earth-pro-stable-7.3.6.x86_64.rpm" \
+  "https://github.com/TheAssassin/AppImageLauncher/releases/download/v2.2.0/appimagelauncher-2.2.0-travis995.0f91801.x86_64.rpm" \
   "https://repo.protonvpn.com/fedora-39-stable/protonvpn-stable-release/protonvpn-stable-release-1.0.1-2.noarch.rpm" \
-  "https://downloads.slack-edge.com/releases/linux/4.35.131/prod/x64/slack-4.35.131-0.1.el8.x86_64.rpm" \
 )
 
 FLATPAKS=(
@@ -97,7 +97,7 @@ echo "##############################################"
 echo "Installing packages with zypper..."
 
 # Install packages from repo
-ZYPPER_COMMAND="sudo zypper in -y"
+ZYPPER_COMMAND="sudo zypper in -y --allow-unsigned-rpm"
 for package in "${PACKAGES_REPO[@]}"; do
     ZYPPER_COMMAND+=" $package"
     echo "  - $package"
@@ -107,7 +107,7 @@ eval "$ZYPPER_COMMAND"
 echo "Installing packages with zypper (from URLs)..."
 
 # Install packages from URLs
-ZYPPER_COMMAND="sudo zypper in -y"
+ZYPPER_COMMAND="sudo zypper in -y --allow-unsigned-rpm"
 for package in "${PACKAGES_URL[@]}"; do
     ZYPPER_COMMAND+=" $package"
     echo "  - $package"
@@ -144,12 +144,6 @@ sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 sudo zypper addrepo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
 sudo zypper in -y brave-browser
 
-# Github CLI (gh)
-echo "Installing Github CLI..."
-sudo zypper addrepo https://cli.github.com/packages/rpm/gh-cli.repo
-sudo zypper ref
-sudo zypper in -y gh
-
 # Pyenv
 echo "Installing Pyenv..."
 curl https://pyenv.run | bash
@@ -163,22 +157,23 @@ wal --theme ./dots/pywal/themes/hackthebox.theme
 # Obsidian
 echo "Installing Obsidian..."
 wget -O ./downloads/Obsidian.AppImage "https://github.com/obsidianmd/obsidian-releases/releases/download/v1.4.16/Obsidian-1.4.16.AppImage"
-# idk what directory this will default install to
+# Should install to ~/Applications by default
 ail-cli integrate ./downloads/Obsidian.AppImage
 
 # Ghidra
 wget -O ./downloads/Ghidra.zip "https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_10.4_build/ghidra_10.4_PUBLIC_20230928.zip"
-unzip -q ./downloads/Ghidra.zip -d $HOME/Applications/
+unzip -q ./downloads/Ghidra.zip -d $HOME/Applications
 mv $HOME/Applications/ghidra_* $HOME/Applications/Ghidra
 chmod +x .$HOME/Applications/Ghidra/ghidraRun
 mkdir $HOME/.local/share/applications
 cp ./files/Ghidra.desktop $HOME/.local/share/applications
+cp ./files/ghidra_icon.png $HOME/Applications/Ghidra
 
 # GEF
 echo "Installing GEF for GDB..."
 bash -c "$(curl -fsSL https://gef.blah.cat/sh)"
 
-# Burp Suite
+# Download Burp Suite
 wget -O ./downloads/burpsuite_install.sh "https://portswigger-cdn.net/burp/releases/download?product=community&version=2023.11.1.3&type=Linux"
 chmod +x ./downloads/burpsuite_install.sh
 
@@ -190,12 +185,24 @@ echo "##############################################"
 echo "       PARTS REQUIRING USER INTERACTION       "
 echo "##############################################"
 
+# Slack
+sudo zypper in "https://downloads.slack-edge.com/releases/linux/4.35.131/prod/x64/slack-4.35.131-0.1.el8.x86_64.rpm"
+
+# Github CLI (gh)
+echo "Installing Github CLI..."
+sudo zypper addrepo https://cli.github.com/packages/rpm/gh-cli.repo
+sudo zypper ref
+sudo zypper in -y gh
+
+# Install Burp Suite
 echo "Installing Burp Suite..."
 ./downloads/burpsuite_install.sh
 
+# Set up Ghidra
 echo "Setting up Ghidra..."
 bash $HOME/Applications/Ghidra/ghidraRun
 
+# Log into Github
 echo "Logging into Github..."
 gh auth login
 
