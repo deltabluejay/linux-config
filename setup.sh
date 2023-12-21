@@ -104,6 +104,8 @@ for package in "${PACKAGES_REPO[@]}"; do
 done
 eval "$ZYPPER_COMMAND"
 
+echo "Installing packages with zypper (from URLs)..."
+
 # Install packages from URLs
 ZYPPER_COMMAND="sudo zypper in -y"
 for package in "${PACKAGES_URL[@]}"; do
@@ -188,15 +190,23 @@ echo "##############################################"
 echo "       PARTS REQUIRING USER INTERACTION       "
 echo "##############################################"
 
-source ./downloads/burpsuite_install.sh
-source ./$HOME/Applications/Ghidra/ghidraRun
+echo "Installing Burp Suite..."
+./downloads/burpsuite_install.sh
+
+echo "Setting up Ghidra..."
+bash $HOME/Applications/Ghidra/ghidraRun
+
+echo "Logging into Github..."
 gh auth login
 
 # Install Firefox extensions (open links automatically)
-firefox --new-tab https://addons.mozilla.org/en-US/firefox/addon/1password-x-password-manager/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search
-for url in "${EXTENSIONS[@]}"; do
-  firefox --new-tab "$url"
+echo "Opening links to install Firefox extensions..."
+FIREFOX_COMMAND="firefox -new-window -url"
+for url in "${FIREFOX_EXTENSIONS[@]}"; do
+    FIREFOX_COMMAND+=" \"$url\""
 done
+FIREFOX_COMMAND+=" 2>/dev/null"
+eval "$FIREFOX_COMMAND"
 
 # TODO: Other VPNs
 # TODO: Install media codecs?
