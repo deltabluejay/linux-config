@@ -51,7 +51,7 @@ PACKAGES_REPO=(
   "virt-manager" \
   "openvpn" \
   "curl" \
-  "java-21-openjdk" \
+  "java-21-openjdk-devel" \
   "discord" \
   "gimp" \
   "gdb" \
@@ -90,8 +90,14 @@ cat ./files/.bashrc_additions >> $HOME/.bashrc
 
 #### INSTALL APPLICATIONS ####
 # Install packages from repository
+echo "##############################################"
+echo "           INSTALLING APPLICATIONS            "
+echo "##############################################"
+
+echo "Installing packages with zypper..."
+
+# Install packages from repo
 ZYPPER_COMMAND="sudo zypper in -y"
-echo "Installing packages..."
 for package in "${PACKAGES_REPO[@]}"; do
     ZYPPER_COMMAND+=" $package"
     echo "  - $package"
@@ -100,7 +106,6 @@ eval "$ZYPPER_COMMAND"
 
 # Install packages from URLs
 ZYPPER_COMMAND="sudo zypper in -y"
-echo "Installing packages..."
 for package in "${PACKAGES_URL[@]}"; do
     ZYPPER_COMMAND+=" $package"
     echo "  - $package"
@@ -112,8 +117,8 @@ echo "Adding Flathub..."
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 # Install flatpaks
-FLATPAK_COMMAND="flatpak install -y flathub"
 echo "Installing flatpaks..."
+FLATPAK_COMMAND="sudo flatpak install -y flathub"
 for flatpak in "${FLATPAKS[@]}"; do
     FLATPAK_COMMAND+=" $flatpak"
     echo "  - $flatpak"
@@ -155,15 +160,15 @@ wal --theme ./dots/pywal/themes/hackthebox.theme
 
 # Obsidian
 echo "Installing Obsidian..."
-wget -O ./downloads/Obsidian.AppImage https://github.com/obsidianmd/obsidian-releases/releases/download/v1.4.16/Obsidian-1.4.16.AppImage
+wget -O ./downloads/Obsidian.AppImage "https://github.com/obsidianmd/obsidian-releases/releases/download/v1.4.16/Obsidian-1.4.16.AppImage"
 # idk what directory this will default install to
 ail-cli integrate ./downloads/Obsidian.AppImage
 
 # Ghidra
-wget -O ./downloads/Ghidra.zip https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_10.4_build/ghidra_10.4_PUBLIC_20230928.zip
-unzip ./downloads/Ghidra.zip
-chmod +x ./downloads/Ghidra/ghidraRun
-mv ./downloads/Ghidra $HOME/Applications/
+wget -O ./downloads/Ghidra.zip "https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_10.4_build/ghidra_10.4_PUBLIC_20230928.zip"
+unzip -q ./downloads/Ghidra.zip -d $HOME/Applications/
+mv $HOME/Applications/ghidra_* $HOME/Applications/Ghidra
+chmod +x .$HOME/Applications/Ghidra/ghidraRun
 mkdir $HOME/.local/share/applications
 cp ./files/Ghidra.desktop $HOME/.local/share/applications
 
@@ -172,11 +177,17 @@ echo "Installing GEF for GDB..."
 bash -c "$(curl -fsSL https://gef.blah.cat/sh)"
 
 # Burp Suite
-wget -O ./downloads/burpsuite_install.sh https://portswigger-cdn.net/burp/releases/download?product=pro&version=2023.11.1.3&type=Linux
+wget -O ./downloads/burpsuite_install.sh "https://portswigger-cdn.net/burp/releases/download?product=community&version=2023.11.1.3&type=Linux"
 chmod +x ./downloads/burpsuite_install.sh
 
+source $HOME/.bash_profile
+source $HOME/.bashrc
+
 #### USER SETUP ####
-echo "These parts require user interaction..."
+echo "##############################################"
+echo "       PARTS REQUIRING USER INTERACTION       "
+echo "##############################################"
+
 source ./downloads/burpsuite_install.sh
 source ./$HOME/Applications/Ghidra/ghidraRun
 gh auth login
@@ -217,4 +228,4 @@ echo "    - [ ] VSCodium theme"
 echo "    - [ ] KDE theme"
 echo "    - [ ] Obsidian theme"
 echo "    - [ ] Wallpaper"
-echo "  - [ ] Install Steam games
+echo "  - [ ] Install Steam games"
