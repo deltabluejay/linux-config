@@ -84,8 +84,8 @@ mkdir ./downloads
 mkdir $HOME/Applications
 
 # .bash_profile and .bashrc
-cat ./files/.bash_profile_additions >> $HOME/.bash_profile
-cat ./files/.bashrc_additions >> $HOME/.bashrc
+cat ./setup_files/bash/.bash_profile_additions >> $HOME/.bash_profile
+cat ./setup_files/bash/.bashrc_additions >> $HOME/.bashrc
 
 
 #### INSTALL APPLICATIONS ####
@@ -166,8 +166,8 @@ unzip -q ./downloads/Ghidra.zip -d $HOME/Applications
 mv $HOME/Applications/ghidra_* $HOME/Applications/Ghidra
 chmod +x .$HOME/Applications/Ghidra/ghidraRun
 mkdir $HOME/.local/share/applications
-cp ./files/Ghidra.desktop $HOME/.local/share/applications
-cp ./files/ghidra_icon.png $HOME/Applications/Ghidra
+cp ./setup_files/ghidra/Ghidra.desktop $HOME/.local/share/applications
+cp ./setup_files/ghidra/ghidra_icon_white.png $HOME/Applications/Ghidra
 
 # GEF
 echo "Installing GEF for GDB..."
