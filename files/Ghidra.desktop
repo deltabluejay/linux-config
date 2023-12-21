@@ -2,6 +2,6 @@
 Version=10.0
 Type=Application
 Terminal=false
-Icon=$HOME/Applications/Ghidra/ghidra_icon.png
+Icon=$HOME/Applications/Ghidra/ghidra_icon_white.png
 Exec=sh $HOME/Applications/Ghidra/ghidraRun
 Name=Ghidra
