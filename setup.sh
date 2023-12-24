@@ -44,6 +44,7 @@ FIREFOX_EXTENSIONS=(
 )
 
 PACKAGES_REPO=(
+  "qtile" \
   "flatpak" \
   "kitty" \
   "wireshark" \
@@ -61,6 +62,11 @@ PACKAGES_REPO=(
   "steam" \
   "ungoogled-chromium" \
   "python311-pywal" \
+  "distrobox" \
+  "gcc" \
+  "opi" \
+  "patchelf" \
+  "ruby" \
 )
 # Trying yast2-docker for Docker GUI
 # If that's not very good follow this: https://docs.docker.com/desktop/install/fedora/
@@ -147,12 +153,31 @@ sudo zypper in -y brave-browser
 # Pyenv
 echo "Installing Pyenv..."
 curl https://pyenv.run | bash
-# TODO: install Python version (may have to install dev packages)
+
+# Install Python build dependencies and install a new version
+sudo zypper in -y gcc automake bzip2 libbz2-devel xz xz-devel openssl-devel ncurses-devel readline-devel zlib-devel tk-devel libffi-devel sqlite3-devel gdbm-devel make findutils patch
+pyenv install 3.12.1
+pyenv global 3.12.1
+
+# pwntools
+echo "Installing pwntools (globally for 3.12.1)..."
+pip install pwntools
+
+# pwninit
+echo "Installing pwninit..."
+wget -O ./downloads/pwninit https://github.com/io12/pwninit/releases/download/3.3.0/pwninit
+mv ./downloads/pwninit $HOME/.local/bin/pwninit
+
+# one_gadget
+echo "Installing one_gadget..."
+sudo gem install one_gadget
 
 # Pywal
 echo "Configuring Pywal..."
 wal --theme ./dots/pywal/themes/hackthebox.theme
-# TODO: add `@reboot wal -R` via `crontab -e`
+
+# Install multimedia codecs
+opi -n codecs
 
 # Obsidian
 echo "Installing Obsidian..."
@@ -194,6 +219,10 @@ sudo zypper addrepo https://cli.github.com/packages/rpm/gh-cli.repo
 sudo zypper ref
 sudo zypper in -y gh
 
+# Log into Github
+echo "Logging into Github..."
+gh auth login
+
 # Install Burp Suite
 echo "Installing Burp Suite..."
 ./downloads/burpsuite_install.sh
@@ -201,10 +230,6 @@ echo "Installing Burp Suite..."
 # Set up Ghidra
 echo "Setting up Ghidra..."
 bash $HOME/Applications/Ghidra/ghidraRun
-
-# Log into Github
-echo "Logging into Github..."
-gh auth login
 
 # Install Firefox extensions (open links automatically)
 echo "Opening links to install Firefox extensions..."
@@ -215,34 +240,39 @@ done
 FIREFOX_COMMAND+=" 2>/dev/null"
 eval "$FIREFOX_COMMAND"
 
-# TODO: Other VPNs
-# TODO: Install media codecs?
 # TODO: Configure power saving?
 
-echo "TODO:"
-echo "  - [ ] KDE customization"
-echo "    - [ ] Latte Dock"
-echo "    - [ ] Workspaces and keybindings"
-echo "    - [ ] Auto brightness off"
-echo "    - [ ] Display scaling?"
-echo "    - [ ] Dark mode"
-echo "  - [ ] Login to applications"
-echo "    - [ ] 1Password (desktop and browser)"
-echo "    - [ ] Obsidian"
-echo "    - [ ] Discord"
-echo "    - [ ] Slack"
-echo "    - [ ] XBrowserSync"
-echo "    - [ ] SimpleLogin"
-echo "    - [ ] ProtonVPN"
-echo "  - [ ] Install Firefox theme"
-echo "  - [ ] Configure Firefox preferences"
-echo "    - [ ] Compact mode"
-echo "    - [ ] Security/privacy settings"
-echo "  - [ ] Configure Ublock Origin filter lists"
-echo "  - [ ] Fully set up Ghidra"
-echo "  - [ ] Ricing"
-echo "    - [ ] VSCodium theme"
-echo "    - [ ] KDE theme"
-echo "    - [ ] Obsidian theme"
-echo "    - [ ] Wallpaper"
-echo "  - [ ] Install Steam games"
+echo "##############################################"
+echo "                     TODO                     "
+echo "##############################################"
+echo " - [ ] Add \`@reboot wal -R\` via \`crontab -e\`"
+echo " - [ ] KDE customization"
+echo "   - [ ] Latte Dock"
+echo "   - [ ] Workspaces and keybindings"
+echo "   - [ ] Auto brightness off"
+echo "   - [ ] Display scaling?"
+echo "   - [ ] Dark mode"
+echo " - [ ] Login to applications"
+echo "   - [ ] 1Password (desktop and browser)"
+echo "   - [ ] Obsidian"
+echo "   - [ ] Discord"
+echo "   - [ ] Slack"
+echo "   - [ ] XBrowserSync"
+echo "   - [ ] SimpleLogin"
+echo "   - [ ] ProtonVPN"
+echo " - [ ] Setup VPNs (CS, THM, BYU)"
+echo " - [ ] Install Firefox theme"
+echo " - [ ] Configure Firefox preferences"
+echo "   - [ ] Compact mode"
+echo "   - [ ] Security/privacy settings"
+echo " - [ ] Configure Ublock Origin filter lists"
+echo " - [ ] Fully set up Ghidra"
+echo " - [ ] Ricing"
+echo "   - [ ] VSCodium theme"
+echo "   - [ ] KDE theme"
+echo "   - [ ] Obsidian theme"
+echo "   - [ ] Wallpaper"
+echo " - [ ] Install Steam games"
+echo " - [ ] Configure power saving and GPU drivers"
+echo " - [ ] Setup distrobox (Kali, Ubuntu, Arch)"
+echo " - [ ] Setup VMs"
