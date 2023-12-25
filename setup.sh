@@ -44,7 +44,6 @@ FIREFOX_EXTENSIONS=(
 )
 
 PACKAGES_REPO=(
-  "qtile" \
   "flatpak" \
   "kitty" \
   "wireshark" \
