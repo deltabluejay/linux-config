@@ -85,13 +85,18 @@ FLATPAKS=(
 
 
 #### SETUP FILE STRUCTURE ####
-echo "Setting up file structure..."
+echo "##############################################"
+echo "            SETTING UP FILESYSTEM             "
+echo "##############################################"
 mkdir ./downloads
 mkdir $HOME/Applications
 
 # .bash_profile and .bashrc
 cat ./setup_files/bash/.bash_profile_additions >> $HOME/.bash_profile
 cat ./setup_files/bash/.bashrc_additions >> $HOME/.bashrc
+
+source $HOME/.bash_profile
+source $HOME/.bashrc
 
 
 #### INSTALL APPLICATIONS ####
@@ -146,6 +151,7 @@ printf "[gitlab.com_paulcarroty_vscodium_repo]\nname=gitlab.com_paulcarroty_vsco
 sudo zypper in -y codium
 
 # Brave
+echo "Installing Brave..."
 sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 sudo zypper addrepo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
 sudo zypper in -y brave-browser
@@ -155,6 +161,7 @@ echo "Installing Pyenv..."
 curl https://pyenv.run | bash
 
 # Install Python build dependencies and install a new version
+echo "Installing Python 3.12.1 with Pyenv..."
 sudo zypper in -y gcc automake bzip2 libbz2-devel xz xz-devel openssl-devel ncurses-devel readline-devel zlib-devel tk-devel libffi-devel sqlite3-devel gdbm-devel make findutils patch
 pyenv install 3.12.1
 pyenv global 3.12.1
@@ -177,6 +184,7 @@ echo "Configuring Pywal..."
 wal --theme ./dots/pywal/themes/hackthebox.theme
 
 # Install multimedia codecs
+echo "Installing multimedia codecs..."
 opi -n codecs
 
 # Obsidian
@@ -186,10 +194,11 @@ wget -O ./downloads/Obsidian.AppImage "https://github.com/obsidianmd/obsidian-re
 ail-cli integrate ./downloads/Obsidian.AppImage
 
 # Ghidra
+echo "Installing Ghidra..."
 wget -O ./downloads/Ghidra.zip "https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_10.4_build/ghidra_10.4_PUBLIC_20230928.zip"
 unzip -q ./downloads/Ghidra.zip -d $HOME/Applications
 mv $HOME/Applications/ghidra_* $HOME/Applications/Ghidra
-chmod +x .$HOME/Applications/Ghidra/ghidraRun
+chmod +x $HOME/Applications/Ghidra/ghidraRun
 mkdir $HOME/.local/share/applications
 cp ./setup_files/ghidra/Ghidra.desktop $HOME/.local/share/applications
 cp ./setup_files/ghidra/ghidra_icon_white.png $HOME/Applications/Ghidra
@@ -199,11 +208,10 @@ echo "Installing GEF for GDB..."
 bash -c "$(curl -fsSL https://gef.blah.cat/sh)"
 
 # Download Burp Suite
+echo "Downloading Burp Suite..."
 wget -O ./downloads/burpsuite_install.sh "https://portswigger-cdn.net/burp/releases/download?product=community&version=2023.11.1.3&type=Linux"
 chmod +x ./downloads/burpsuite_install.sh
 
-source $HOME/.bash_profile
-source $HOME/.bashrc
 
 #### USER SETUP ####
 echo "##############################################"
@@ -211,28 +219,29 @@ echo "       PARTS REQUIRING USER INTERACTION       "
 echo "##############################################"
 
 # Slack
+echo "Install Slack..."
 sudo zypper in "https://downloads.slack-edge.com/releases/linux/4.35.131/prod/x64/slack-4.35.131-0.1.el8.x86_64.rpm"
 
 # Github CLI (gh)
-echo "Installing Github CLI..."
+echo "Install Github CLI..."
 sudo zypper addrepo https://cli.github.com/packages/rpm/gh-cli.repo
 sudo zypper ref
 sudo zypper in -y gh
 
 # Log into Github
-echo "Logging into Github..."
+echo "Log into Github..."
 gh auth login
 
 # Install Burp Suite
-echo "Installing Burp Suite..."
+echo "Install Burp Suite..."
 ./downloads/burpsuite_install.sh
 
 # Set up Ghidra
-echo "Setting up Ghidra..."
+echo "Setup Ghidra..."
 bash $HOME/Applications/Ghidra/ghidraRun
 
 # Install Firefox extensions (open links automatically)
-echo "Opening links to install Firefox extensions..."
+echo "Install Firefox extensions..."
 FIREFOX_COMMAND="firefox -new-window -url"
 for url in "${FIREFOX_EXTENSIONS[@]}"; do
     FIREFOX_COMMAND+=" \"$url\""
@@ -240,17 +249,16 @@ done
 FIREFOX_COMMAND+=" 2>/dev/null"
 eval "$FIREFOX_COMMAND"
 
-# TODO: Configure power saving?
 
 echo "##############################################"
 echo "                     TODO                     "
 echo "##############################################"
 echo " - [ ] Add \`@reboot wal -R\` via \`crontab -e\`"
-echo " - [ ] KDE customization"
-echo "   - [ ] Latte Dock"
+echo " - [ ] Rice/Configure Desktop"
+echo "   - [ ] Dock"
 echo "   - [ ] Workspaces and keybindings"
-echo "   - [ ] Auto brightness off"
 echo "   - [ ] Display scaling?"
+echo "   - [ ] Theming (GTK and Qt)"
 echo "   - [ ] Dark mode"
 echo " - [ ] Login to applications"
 echo "   - [ ] 1Password (desktop and browser)"
