@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #### Usage ####
-DISTROS=("SUSE" "FEDORA")
+DISTROS=("SUSE" "ARCH")
 
 # Check if the script is provided with an argument
 if [ $# -eq 0 ]; then
@@ -28,7 +28,6 @@ else
     done
     exit 1
 fi
-# TODO: implement different commands depending on distro
 
 ####################
 #       SUSE       #
@@ -44,44 +43,80 @@ FIREFOX_EXTENSIONS=(
 )
 
 PACKAGES_REPO=(
-  "flatpak" \
-  "kitty" \
-  "wireshark" \
-  "virt-manager" \
-  "openvpn" \
-  "curl" \
-  "java-21-openjdk-devel" \
-  "discord" \
-  "gimp" \
-  "binutils" \
-  "gdb" \
-  "docker" \
-  "docker-compose" \
-  "yast2-docker" \
-  "steam" \
-  "ungoogled-chromium" \
-  "python311-pywal" \
-  "distrobox" \
-  "gcc" \
-  "opi" \
-  "patchelf" \
-  "ruby" \
+    "7zip" \
+    "binutils" \
+    "binwalk" \
+    "btop" \
+    "cargo" \
+    "chromium" \
+    "cmake" \
+    "curl" \
+    "discord" \
+    "distrobox" \
+    "docker" \
+    "docker-compose" \
+    "exiftool" \
+    "fastfetch" \
+    "flatpak" \
+    "gcc" \
+    "gdb" \
+    "gdbserver" \
+    "gimp" \
+    "go" \
+    "gparted" \
+    "gzip" \
+    "hack-fonts" \
+    "hashcat" \
+    "java-21-openjdk-devel" \
+    "kitty" \
+    "libvirt" \
+    "libvirt-daemon-driver-qemu" \
+    "nmap" \
+    "openvpn" \
+    "opi" \
+    "patchelf" \
+    "php" \
+    "podman" \
+    "python311-pywal" \
+    "qemu" \
+    "qemu-extra" \
+    "qemu-kvm" \
+    "ruby" \
+    "steam" \
+    "strongswan-ipsec" \
+    "tmux" \
+    "touchegg" \
+    "vim" \
+    "virt-manager" \
+    "virt-manager" \
+    "wget"
+    "wireshark" \
 )
-# Trying yast2-docker for Docker GUI
-# If that's not very good follow this: https://docs.docker.com/desktop/install/fedora/
 
 PACKAGES_URL=(
   "https://dl.google.com/dl/linux/direct/google-earth-pro-stable-7.3.6.x86_64.rpm" \
   "https://github.com/TheAssassin/AppImageLauncher/releases/download/v2.2.0/appimagelauncher-2.2.0-travis995.0f91801.x86_64.rpm" \
-  "https://repo.protonvpn.com/fedora-39-stable/protonvpn-stable-release/protonvpn-stable-release-1.0.1-2.noarch.rpm" \
+#   "https://repo.protonvpn.com/fedora-39-stable/protonvpn-stable-release/protonvpn-stable-release-1.0.1-2.noarch.rpm"
 )
 
 FLATPAKS=(
   "com.spotify.Client" \
   "org.signal.Signal" \
   "com.getpostman.Postman" \
+  "org.keepassxc.KeePassXC" \
+  "io.podman_desktop.PodmanDesktop" \
+  "com.github.joseexposito.touche" \
+  "org.gtk.Gtk3theme.Breeze" \
+  "org.raspberrypi.rpi-imager" \
+  "org.audacityteam.Audacity" \
+  "org.videolan.VLC" \
+  "org.gimp.GIMP"
 )
 
+# DISTROBOX
+# MySQL client
+# Parsec
+# DB Browser
 
 #### SETUP FILE STRUCTURE ####
 echo "##############################################"
@@ -126,11 +161,11 @@ eval "$ZYPPER_COMMAND"
 
 # Flathub
 echo "Adding Flathub..."
-flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 # Install flatpaks
 echo "Installing flatpaks..."
-FLATPAK_COMMAND="sudo flatpak install -y flathub"
+FLATPAK_COMMAND="flatpak install --user -y flathub"
 for flatpak in "${FLATPAKS[@]}"; do
     FLATPAK_COMMAND+=" $flatpak"
     echo "  - $flatpak"
@@ -166,8 +201,9 @@ pyenv install 3.12.1
 pyenv global 3.12.1
 
 # pwntools
-echo "Installing pwntools (globally for 3.12.1)..."
-pip install pwntools
+# echo "Installing pwntools (globally for 3.12.1)..."
+# pip install setuptools
+# pip install pwntools
 
 # pwninit
 echo "Installing pwninit..."
@@ -268,7 +304,7 @@ echo "   - [ ] Slack"
 echo "   - [ ] XBrowserSync"
 echo "   - [ ] SimpleLogin"
 echo "   - [ ] ProtonVPN"
-echo " - [ ] Setup VPNs (CS, THM, BYU)"
+echo " - [ ] Setup VPNs (CS, THM, BYU, CCDC)"
 echo " - [ ] Install Firefox theme"
 echo " - [ ] Configure Firefox preferences"
 echo "   - [ ] Compact mode"
@@ -281,6 +317,6 @@ echo "   - [ ] KDE theme"
 echo "   - [ ] Obsidian theme"
 echo "   - [ ] Wallpaper"
 echo " - [ ] Install Steam games"
-echo " - [ ] Configure power saving and GPU drivers"
-echo " - [ ] Setup distrobox (Kali, Ubuntu, Arch)"
+echo " - [ ] Configure power saving"
+echo " - [ ] Setup distrobox (Kali, Ubuntu)"
 echo " - [ ] Setup VMs"

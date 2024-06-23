@@ -2,6 +2,9 @@
 Version=10.0
 Type=Application
 Terminal=false
-Icon={HOME}/Applications/Ghidra/ghidra_icon_white.png
-Exec=sh {HOME}/Applications/Ghidra/ghidraRun
+Icon=/home/ava/Applications/Ghidra/ghidra_icon_white.png
+Exec=sh /home/ava/Applications/Ghidra/ghidraRun
 Name=Ghidra
+Comment=Decompile go brrrrr
+Keywords=ghidra;
+Categories=Utility
