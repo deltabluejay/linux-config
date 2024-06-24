@@ -34,7 +34,7 @@ fi
 source ~/.cache/wal/colors-tty.sh
 
 # Kitty
-export KITTY_CONFIG_DIRECTORY="$HOME/Linux-Config/dots/kitty"
+export KITTY_CONFIG_DIRECTORY="$HOME/linux-config/dots/kitty"
 #export TERM=xterm-kitty
 
 # Ruby gem
