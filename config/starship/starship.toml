@@ -1,0 +1,6 @@
+# Prompt
+add_newline = false
+
+[cmd_duration]
+#min_time = 15000
+disabled = true
