@@ -1,0 +1,31 @@
+#input {
+    color: --wofi-color7;
+    background-color: --wofi-color0;
+    margin: 10px;
+    border-color: --wofi-color7
+}
+
+#input:focused {
+    box-shadow: none;
+}
+
+window {
+    color: --wofi-color6;
+    background-color: --wofi-color0;
+    border-radius: 15px;
+    border: 3px solid --wofi-color6;
+}
+
+#scroll {
+    margin: 10px;
+}
+
+#img {
+    margin-right: 10px;
+}
+
+#entry:selected {
+    color: --wofi-color7;
+    background-color: --wofi-color4;
+}
+    

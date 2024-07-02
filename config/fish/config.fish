@@ -15,3 +15,10 @@ alias vi="/usr/bin/vim"
 # Use starship prompt
 starship init fish | source
 set -x STARSHIP_CONFIG ~/.config/starship/starship.toml
+
+# Variables
+set -x EDITOR nvim
+set -x VISUAL nvim
+
+# Zoxide
+zoxide init fish --cmd j | source
