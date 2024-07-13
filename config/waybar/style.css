@@ -35,12 +35,18 @@ window#waybar.empty .modules-center {
 
 /* Workspace indicators */
 #workspaces button {
+    margin: 2px 0;
     padding: 0 7px;
     transition: none;
     animation: none;
     background-color: @background;
     color: @foreground;
     border: none;
+}
+
+#workspaces button.active {
+    background-color: @color1;
+    color: @background;
 }
 
 #workspaces button:hover {
@@ -73,17 +79,25 @@ window#waybar.empty .modules-center {
     padding: 0 6px;
 }
 
+#cpu,
+#memory,
+#temperature {
+}
+
+#backlight {
+    color: @color3;
+}
+
+#clock {
+    color: @color5;
+}
+
 #battery.charging, #battery.plugged {
+    color: @color2;
 }
 
 #battery.critical:not(.charging) {
-    background-color: @color1;
-    color: @foreground; 
-    animation-name: blink;
-    animation-duration: 0.5s;
-    animation-timing-function: steps(12);
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
+    color: @color1; 
 }
 
 #pulseaudio {
@@ -93,7 +107,15 @@ window#waybar.empty .modules-center {
     color: @color8;
 }
 
-#idle_inhibitor.activated {
+#pulseaudio.bluetooth {
+    color: @color4
+}
+
+#idle_inhibitor.deactivated {
     color: @color8;
+}
+
+#idle_inhibitor.activated {
+    color: @color3;
 }
 
