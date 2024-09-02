@@ -32,11 +32,14 @@ fi
 #### CONSTANTS ####
 # Firefox Extensions
 FIREFOX_EXTENSIONS=(
-    "https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search" \
-    "https://addons.mozilla.org/en-US/firefox/addon/1password-x-password-manager/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search" \
-    "https://addons.mozilla.org/en-US/firefox/addon/simplelogin/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search" \
-    "https://addons.mozilla.org/en-US/firefox/addon/darkreader/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search" \
-    "https://addons.mozilla.org/en-US/firefox/addon/xbs/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search" \
+    "https://addons.mozilla.org/en-US/firefox/addon/ublock-origin" \
+    "https://addons.mozilla.org/en-US/firefox/addon/1password-x-password-manager" \
+    "https://addons.mozilla.org/en-US/firefox/addon/simplelogin" \
+    "https://addons.mozilla.org/en-US/firefox/addon/darkreader" \
+    "https://addons.mozilla.org/en-US/firefox/addon/xbs" \
+    "https://addons.mozilla.org/en-US/firefox/addon/firefox-color" \
+    "https://addons.mozilla.org/en-US/firefox/addon/plasma-integration" \
+    "https://addons.mozilla.org/en-US/firefox/addon/simple-tab-groups"
 )
 
 # Flatpaks
@@ -152,7 +155,7 @@ chmod +x ./downloads/burpsuite_install.sh
 sudo usermod -aG docker,libvirt,kvm $USER
 
 # Create kali distrobox
-distrobox create --image kalilinux/kali-rolling:latest --name kali --yes
+distrobox create --image docker.io/kalilinux/kali-rolling:latest --name kali --yes
 distrobox enter kali -e sudo apt update
 distrobox enter kali -e sudo apt upgrade -y
 distrobox enter kali -e sudo apt install -y kali-linux-default
@@ -186,7 +189,7 @@ echo " - [ ] Add \`@reboot wal -R\` via \`crontab -e\`"
 echo " - [ ] Rice/Configure Desktop"
 echo "   - [ ] Dock"
 echo "   - [ ] Workspaces and keybindings"
-echo "   - [ ] Display scaling?"
+echo "   - [ ] Display scaling? (if Wayland)"
 echo "   - [ ] Theming (GTK and Qt)"
 echo "   - [ ] Dark mode"
 echo " - [ ] Login to applications"
@@ -196,7 +199,6 @@ echo "   - [ ] Discord"
 echo "   - [ ] Slack"
 echo "   - [ ] XBrowserSync"
 echo "   - [ ] SimpleLogin"
-echo "   - [ ] ProtonVPN"
 echo "   - [ ] Signal"
 echo " - [ ] Setup VPNs (CS, THM, BYU, CCDC, Proton)"
 echo " - [ ] Install Firefox theme"
@@ -210,6 +212,8 @@ echo "   - [ ] VSCodium theme"
 echo "   - [ ] KDE theme"
 echo "   - [ ] Obsidian theme"
 echo "   - [ ] Wallpaper"
+echo "   - [ ] Ghidra theme"
+echo " - [ ] Configure Touche (if X11)"
 echo " - [ ] Install Steam games"
 echo " - [ ] Configure power saving"
 echo " - [ ] Setup VMs"
