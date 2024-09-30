@@ -15,6 +15,7 @@ desktop_file="$HOME/.local/share/applications/${app_name}.desktop"
 
 mkdir "$HOME/Applications/$app_name/"
 cp "$appimage" "$saved_appimage"
+chmod +x "$saved_appimage"
 cp "$app_icon" "$saved_app_icon"
 
 echo "[Desktop Entry]" > "$desktop_file"

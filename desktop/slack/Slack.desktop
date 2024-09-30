@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=10.0
+Type=Application
+Terminal=false
+Icon=/home/ava/Applications/Slack/slack.png
+Exec=firefox --kiosk https://slack.com/signin#/signin --profile ~/.config/firefox/profiles/PWA/
+Name=Slack
+Comment=Slack
+Keywords=slack;
+Categories=Internet

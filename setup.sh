@@ -127,7 +127,8 @@ wal --theme ./dots/pywal/themes/hackthebox.theme
 
 # Obsidian
 echo "Installing Obsidian..."
-wget -O ./downloads/Obsidian.AppImage "https://github.com/obsidianmd/obsidian-releases/releases/download/v1.4.16/Obsidian-1.4.16.AppImage"
+#wget -O ./downloads/Obsidian.AppImage "https://github.com/obsidianmd/obsidian-releases/releases/download/v1.4.16/Obsidian-1.4.16.AppImage"
+flatpak install --user flathub md.obsidian.Obsidian
 # Should install to ~/Applications by default
 ail-cli integrate ./downloads/Obsidian.AppImage
 
@@ -157,8 +158,13 @@ sudo usermod -aG docker,libvirt,kvm $USER
 # Create kali distrobox
 distrobox create --image docker.io/kalilinux/kali-rolling:latest --name kali --yes
 distrobox enter kali -e sudo apt update
-distrobox enter kali -e sudo apt upgrade -y
-distrobox enter kali -e sudo apt install -y kali-linux-default
+distrobox enter kali -e export TERM=xterm; sudo apt upgrade -y
+distrobox enter kali -e export TERM=xterm; sudo apt install -y kali-linux-default
+distrobox enter kali -e export TERM=xterm; sudo apt install -y gdb gdb-multiarch
+
+# https://github.com/pwndbg/pwndbg/releases/download/2024.02.14/pwndbg_2024.02.14_amd64.deb
+wget https://github.com/pwndbg/pwndbg/releases/download/2024.02.14/pwndbg_2024.02.14_amd64.deb
+distrobox enter kali -e sudo apt install -y ./pwndbg*.deb
 
 # Log into Github
 echo "Log into Github..."

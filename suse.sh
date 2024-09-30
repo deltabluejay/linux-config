@@ -51,7 +51,6 @@ PACKAGES_REPO=(
     "touchegg" \
     "vim" \
     "virt-manager" \
-    "virt-manager" \
     "wget"
     "wireshark" \
 )

@@ -22,3 +22,10 @@ set -x VISUAL nvim
 
 # Zoxide
 zoxide init fish --cmd j | source
+
+# Pyenv
+set -Ux PYENV_ROOT $HOME/.pyenv
+fish_add_path $PYENV_ROOT/bin
+pyenv init - | source
+status --is-interactive; and pyenv virtualenv-init - | source
+

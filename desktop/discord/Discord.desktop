@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=10.0
+Type=Application
+Terminal=false
+Icon=/home/ava/Applications/Discord/discord.png
+Exec=firefox --kiosk https://discord.com/channels/@me --profile ~/.config/firefox/profiles/PWA/
+Name=Discord
+Comment=Discord
+Keywords=discord;
+Categories=Internet
