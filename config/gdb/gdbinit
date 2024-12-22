@@ -1,0 +1,15 @@
+source /home/ava/Applications/pwndbg/gdbinit.py
+source /home/ava/Applications/splitmind/gdbinit.py
+set debuginfod enabled off
+set show-flags off
+set show-compact-regs off
+
+python
+import splitmind
+(splitmind.Mind()
+  .left(of="main", display="regs", size="64")
+  .below(of="regs", display="stack", size="24")
+  .below(of="stack", display="backtrace", size="8")
+).build()
+end
+

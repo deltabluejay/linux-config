@@ -26,6 +26,9 @@ zoxide init fish --cmd j | source
 # Pyenv
 set -Ux PYENV_ROOT $HOME/.pyenv
 fish_add_path $PYENV_ROOT/bin
+fish_add_path $HOME/.cargo/bin
 pyenv init - | source
 status --is-interactive; and pyenv virtualenv-init - | source
 
+# Rbenv
+set -x GEM_HOME $HOME/.gem
