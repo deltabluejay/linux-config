@@ -11,6 +11,7 @@ abbr --add venv pyenv activate
 abbr --add ff fastfetch
 alias vim="nvim"
 alias vi="/usr/bin/vim"
+alias ls="eza --icons=always"
 
 # Use starship prompt
 starship init fish | source
