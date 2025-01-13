@@ -4,16 +4,23 @@ sudo usermod -aG docker ava
 #sudo systemctl start docker
 sudo zypper in podman python311-podman-compose
 sudo zypper in docker docker-compose
-sudo zypper in stow fish starship zoxide
-sudo zypper in make pyenv neovim
+sudo zypper in stow fish starship zoxide eza
+sudo zypper in make pyenv rbenv neovim
 sudo zypper in NetworkManager-l2tp
 sudo zypper in wireshark
 sudo zypper in gparted
 sudo zypper in cron
 sudo zypper in google-noto-fonts fetchmsttfonts
-sudo zypper in libvirt
+sudo zypper in libvirt freerdp
 sudo zypper in rclone
-sudo zypper in gcc gcc-32bit
+sudo zypper in gcc gcc-32bit glibc-devel-static
+
+# Lazyvim
+sudo zypper in fzf ripgrep fd
+
+# Markdown preview
+sudo zypper in glow
+
 
 # VMs
 sudo systemctl enable libvirtd
@@ -27,6 +34,7 @@ sudo virsh net-autostart default
 flatpak install --user flathub io.podman_desktop.PodmanDesktop
 flatpak install --user flathub com.parsecgaming.parsec
 flatpak install --user flathub com.slack.Slack
+flatpak install --user flathub com.discordapp.Discord
 
 ./stow.sh
 mkdir ~/Applications
