@@ -1,0 +1,6 @@
+{
+    "window.titleBarStyle": "custom",
+    "editor.fontFamily": "'Hack Nerd Font', 'Droid Sans Mono', 'monospace', monospace",
+    "workbench.colorTheme": "Hack The Box",
+    "telemetry.telemetryLevel": "off"
+}

