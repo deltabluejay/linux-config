@@ -30,6 +30,7 @@ set -x STARSHIP_CONFIG ~/.config/starship/starship.toml
 # Variables
 set -x EDITOR nvim
 set -x VISUAL nvim
+# set -x TERM xterm # for kitty terminal
 
 # Zoxide
 zoxide init fish --cmd j | source
@@ -49,6 +50,7 @@ end
 
 # Rbenv
 set -x GEM_HOME $HOME/.gem
+status --is-interactive; and rbenv init - --no-rehash fish | source
 
 # Wal
 #wal -R

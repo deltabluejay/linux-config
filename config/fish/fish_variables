@@ -2,7 +2,7 @@
 # VERSION: 3.0
 SETUVAR --export PYENV_ROOT:/home/ava/\x2epyenv
 SETUVAR --export STARSHIP_CONFIG:/home/ava/\x2econfig/starship/starship\x2etoml
-SETUVAR __fish_initialized:3400
+SETUVAR __fish_initialized:3800
 SETUVAR fish_color_autosuggestion:\x1d
 SETUVAR fish_color_cancel:ffcc5c
 SETUVAR fish_color_command:5cb2ff
