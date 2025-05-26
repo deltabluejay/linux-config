@@ -1,0 +1,7 @@
+[Desktop Entry]
+Exec=wal -R
+Icon=
+Name=wal
+Path=
+Terminal=False
+Type=Application
