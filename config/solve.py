@@ -2,6 +2,7 @@
 from pwn import *
 
 binary = "./{bin_name}"
+run_args = []
 remote_addr = "remote"
 remote_port = 1337
 
@@ -20,17 +21,17 @@ def run():
     elif args.GDB:
         context.terminal = ["tmux", "splitw", "-h", "-l", "120"]
         try:
-            return gdb.debug(binary, gdbscript=gs)
+            return gdb.debug(args=[binary, *run_args], gdbscript=gs)
         except ValueError:
             print("ERROR: tmux not active")
         exit(1)
     else:
-        return elf.process()
+        return elf.process(argv=run_args)
 
 p = run()
 
 ##### Pwn #####
-p.recvuntil("> ", drop=True)
+p.recvuntil(b'> ', drop=True)
 
 ### ROP ###
 libc.address = readp - libc.sym['read']

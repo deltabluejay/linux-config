@@ -1,19 +1,8 @@
-source /home/ava/Applications/pwndbg/gdbinit.py
-source /home/ava/Applications/splitmind/gdbinit.py
+source ~/Applications/pwndbg/gdbinit.py
+add-auto-load-safe-path /var/home/ava/.gdbinit
+add-auto-load-safe-path /home/ava/Documents/BYU/Classes/F25/OS/xv6-byu-cs-345-fall-2025/.gdbinit
 set debuginfod enabled off
 set show-flags off
 set show-compact-regs off
 set show-tips off
-
-#python
-#import splitmind
-#(splitmind.Mind()
-#  .above(of="main", display="regs", size="64")
-#  .below(of="regs", display="stack", size="24")
-  #.below(of="stack", display="backtrace", size="8")
-  #.show("legend", on="regs")
-  #.show("legend", on="stack")
-  #.show("legend", on="backtrace")
-#).build()
-#end
-
+set context-sections "regs disasm code ghidra stack expressions threads heap_tracker"
