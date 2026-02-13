@@ -26,6 +26,7 @@ set -x EDITOR nvim
 set -x VISUAL nvim
 set -x TERM xterm-256color # for kitty terminal
 set -x BN_USER_DIRECTORY "~/.config/binaryninja/"
+set -x POWERSHELL_TELEMETRY_OPTOUT 1
 
 fish_add_path $PYENV_ROOT/bin
 fish_add_path $HOME/.cargo/bin
