@@ -1,5 +1,7 @@
 if status is-interactive
     # Commands to run in interactive sessions can go here
+    set -Ux PYENV_ROOT $HOME/.pyenv
+    test -d $PYENV_ROOT/bin; and fish_add_path $PYENV_ROOT/bin
 end
 
 # Disable greeting
@@ -12,6 +14,7 @@ abbr --add venv pyenv activate
 abbr --add lvenv source ./venv/bin/activate.fish
 abbr --add mklvenv python3 -m venv venv
 abbr --add dc docker compose
+abbr --add dcrdp xfreerdp /u:BYUCCDC\\\\deltabluejay /v:192.168.4.60 /dynamic-resolution /scale-desktop:172 /scale-device:100
 alias l=ls
 alias r=ranger
 alias pwninit="pwninit --template-path ~/.config/solve.py"
@@ -28,7 +31,6 @@ set -x TERM xterm-256color # for kitty terminal
 set -x BN_USER_DIRECTORY "~/.config/binaryninja/"
 set -x POWERSHELL_TELEMETRY_OPTOUT 1
 
-fish_add_path $PYENV_ROOT/bin
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/go/bin
 fish_add_path $HOME/Applications/
@@ -50,9 +52,7 @@ if test -z "$CONTAINER_ID"
     alias vim="nvim"
 
     # Pyenv
-    set -Ux PYENV_ROOT $HOME/.pyenv
-    pyenv init - | source
-    status --is-interactive; and pyenv virtualenv-init - | source
+    pyenv init - fish | source
 
     # Rbenv
     set -x GEM_HOME $HOME/.gem

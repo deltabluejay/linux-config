@@ -31,6 +31,13 @@ BREW_PACKAGES=(
     "zip" \
     "gzip" \
     "tmux" \
+    "pillow"    # for kitty image support
+)
+
+BREW_CASKS=(
+    "font-hack-nerd-font" \
+    "font-fira-code-nerd-font" \
+    "font-symbols-only-nerd-font"
 )
 
 SYSTEM_PACKAGES=(
@@ -113,11 +120,16 @@ function get_distro {
         echo "$((i + 1)). ${DISTROS[$i]}"
     done
     choice=$(get_input_string "Pick a number: " | tr -d ' ')
-    if [[ $choice -ge 1 && $choice -le ${#items[@]} ]]; then
-        distro=${items[$((choice - 1))]}
+
+    if [[ "$choice" =~ ^[0-9]+$ ]]; then
+        # Check if number is in valid range
+        if [ "$choice" -ge 1 ] && [ "$choice" -le "${#items[@]}" ]; then
+            distro="${items[$((choice-1))]}"
+        else
+            echo "Invalid choice. Please enter a number between 1 and ${#items[@]}."
+        fi
     else
-        error "Invalid choice"
-        exit 1
+        echo "Please enter a valid number."
     fi
 }
 
@@ -126,6 +138,7 @@ function install_with_brew {
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     echo "Installing Homebrew packages..."
     brew install -y "${BREW_PACKAGES[@]}"
+    brew install -y --cask "${BREW_CASKS[@]}"
 }
 
 function install_flatpaks {
@@ -226,7 +239,12 @@ function install_burpsuite {
 }
 
 function install_binja {
-    # TODO
+    echo "Installing Binary Ninja..."
+    wget https://cdn.binary.ninja/installers/binaryninja_free_linux.zip -O ~/Downloads/binaryninja_free_linux.zip
+    unzip ~/Downloads/binaryninja_free_linux.zip -d ~/Applications/
+    cp ./desktop/binja/binja.png ~/Applications/binaryninja/
+    chmod +x ~/Applications/binaryninja/binaryninja
+    cp ./desktop/binja/binja.desktop ~/.local/share/applications/
 }
 
 function install_1password {
@@ -306,10 +324,6 @@ function open_firefox_extensions {
 #####################################################
 
 ######################## MAIN #######################
-# Add current user to needed groups for docker and virt-manager to work
-sudo usermod -aG docker,libvirt,kvm $USER
-sudo virsh net-autostart default # ?
-
 # Make applications folder
 mkdir $HOME/Applications
 # Symlink dotfiles
@@ -343,3 +357,8 @@ setup_kde
 # VSCode extensions
 # Obsidian vault/extensions
 # System fonts? Nerd fonts?
+
+# Add current user to needed groups for docker and virt-manager to work
+sudo usermod -aG docker,libvirt,kvm $USER
+# Autostart libvirt network
+sudo virsh net-autostart default # ?
