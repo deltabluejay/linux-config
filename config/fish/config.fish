@@ -25,15 +25,6 @@ if status is-interactive
 end
 
 ### Common between Linux and MacOS ###
-# Generic aliases
-alias l=ls
-type -q ranger; and alias r="ranger"
-type -q vim; and alias vi="vim"
-type -q nvim; and alias vim="nvim"
-type -q eza; and alias ls="eza --icons=always"
-type -q moor; and alias less="moor"
-type -q fastfetch; and abbr --add ff fastfetch
-
 # Set editor/visual
 if type -q nvim
     set -x EDITOR nvim
@@ -42,6 +33,17 @@ else if type -q vim
     set -x EDITOR vim
     set -x VISUAL vim
 end
+
+# Generic aliases
+alias l=ls
+type -q ranger; and alias r="ranger"
+type -q vim; and alias vi="vim"
+type -q nvim; and alias vim="nvim"
+type -q eza; and alias ls="eza --icons=always"
+type -q moor; and alias less="moor"
+type -q fastfetch; and abbr --add ff fastfetch
+type -q bat; and alias cat="bat -p -P"
+type -q batcat; and alias cat="batcat -p -P"
 
 # Init Zoxide
 type -q zoxide; and zoxide init fish --cmd j | source
