@@ -1,1 +1,3 @@
 config/firefox/profiles
+.DS_Store
+fish_variables

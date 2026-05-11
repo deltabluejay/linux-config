@@ -1,66 +1,53 @@
-if status is-interactive
-    # Commands to run in interactive sessions can go here
-    set -Ux PYENV_ROOT $HOME/.pyenv
-    test -d $PYENV_ROOT/bin; and fish_add_path $PYENV_ROOT/bin
-end
-
 # Disable greeting
 set -U fish_greeting
 
-# Aliases
-abbr --add db distrobox
-abbr --add ff fastfetch
-abbr --add venv pyenv activate
-abbr --add lvenv source ./venv/bin/activate.fish
-abbr --add mklvenv python3 -m venv venv
-abbr --add dc docker compose
-abbr --add dcrdp xfreerdp /u:BYUCCDC\\\\deltabluejay /v:192.168.4.60 /dynamic-resolution /scale-desktop:172 /scale-device:100
+# Don't run if in container
+if test -n "$CONTAINER_ID"
+    exit
+end
+
+# OS-specific
+if status is-interactive
+    if string match -q "/byu*" $HOME
+        # BYU
+        source "$HOME/.config/fish/byu.fish"
+	    exit
+    else
+        switch $(uname)
+            case Linux
+                # Linux
+                source "$HOME/.config/fish/linux.fish"
+            case Darwin
+                # MacOS
+                source "$HOME/.config/fish/darwin.fish"
+        end
+    end
+end
+
+### Common between Linux and MacOS ###
+# Generic aliases
 alias l=ls
-alias r=ranger
-alias pwninit="pwninit --template-path ~/.config/solve.py"
-alias cat="bat -p -P"
+type -q ranger; and alias r="ranger"
+type -q vim; and alias vi="vim"
+type -q nvim; and alias vim="nvim"
+type -q eza; and alias ls="eza --icons=always"
+type -q moor; and alias less="moor"
+type -q fastfetch; and abbr --add ff fastfetch
 
-if test "$CONTAINER_ID" = "kali"; or test "$CONTAINER_ID" = "ubuntu"
-    alias cat="batcat -p -P"
+# Set editor/visual
+if type -q nvim
+    set -x EDITOR nvim
+    set -x VISUAL nvim
+else if type -q vim
+    set -x EDITOR vim
+    set -x VISUAL vim
 end
 
-# Variables
-set -x EDITOR nvim
-set -x VISUAL nvim
-set -x TERM xterm-256color # for kitty terminal
-set -x BN_USER_DIRECTORY "~/.config/binaryninja/"
-set -x POWERSHELL_TELEMETRY_OPTOUT 1
+# Init Zoxide
+type -q zoxide; and zoxide init fish --cmd j | source
 
-fish_add_path $HOME/.cargo/bin
-fish_add_path $HOME/go/bin
-fish_add_path $HOME/Applications/
-fish_add_path $HOME/.gem/bin/
-fish_add_path $HOME/Applications/codeql/
-
-if test -z "$CONTAINER_ID"
-    # Use starship prompt
+# Init starship prompt
+if type -q starship
     starship init fish | source
-    set -x STARSHIP_CONFIG ~/.config/starship/starship.toml
-
-    # Init Zoxide
-    zoxide init fish --cmd j | source
-
-    # Aliases
-    alias vi="/usr/bin/vim"
-    alias ls="eza --icons=always"
-    alias less="moor"
-    alias vim="nvim"
-
-    # Pyenv
-    pyenv init - fish | source
-
-    # Rbenv
-    set -x GEM_HOME $HOME/.gem
-    status --is-interactive; and rbenv init - --no-rehash fish | source
+    set -x STARSHIP_CONFIG "$HOME/.config/starship/starship.toml"
 end
-
-
-# Wal
-#wal -R
-#cat $HOME/.cache/wal/sequences
-source ~/.cache/wal/colors.fish
