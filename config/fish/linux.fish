@@ -15,7 +15,6 @@ abbr --add dcrdp xfreerdp /u:BYUCCDC\\\\deltabluejay /v:192.168.4.60 /dynamic-re
 alias pwninit="pwninit --template-path ~/.config/solve.py"
 
 # Variables
-set -x TERM xterm-256color # for kitty terminal
 set -x BN_USER_DIRECTORY "~/.config/binaryninja/"
 set -x POWERSHELL_TELEMETRY_OPTOUT 1
 

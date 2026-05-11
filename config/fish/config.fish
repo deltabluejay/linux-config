@@ -34,6 +34,11 @@ else if type -q vim
     set -x VISUAL vim
 end
 
+# Fix kitty terminal
+if string match -q "xterm-kitty" $TERM
+    set -x TERM xterm-256color
+end
+
 # Generic aliases
 alias l=ls
 type -q ranger; and alias r="ranger"
