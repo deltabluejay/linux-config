@@ -24,6 +24,8 @@ if status is-interactive
 end
 
 ### Common between Linux and MacOS ###
+fish_add_path $HOME/.local/bin/
+
 # Set editor/visual
 if type -q nvim
     set -x EDITOR nvim
@@ -61,3 +63,12 @@ if type -q starship
     starship init fish | source
     set -x STARSHIP_CONFIG "$HOME/.config/starship/starship.toml"
 end
+
+# Init pyenv
+if type -q pyenv
+    abbr --add venv pyenv activate
+    set -Ux PYENV_ROOT $HOME/.pyenv
+    test -d $PYENV_ROOT/bin; and fish_add_path $PYENV_ROOT/bin
+    pyenv init - fish | source
+end
+
