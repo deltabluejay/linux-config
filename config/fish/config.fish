@@ -11,7 +11,6 @@ if status is-interactive
     if string match -q "/byu*" $HOME
         # BYU
         source "$HOME/.config/fish/byu.fish"
-	    exit
     else
         switch $(uname)
             case Linux
@@ -41,8 +40,9 @@ end
 
 # Generic aliases
 alias l=ls
+alias c=clear
 type -q ranger; and alias r="ranger"
-type -q vim; and alias vi="vim"
+type -q vim; and alias vi=$(which vim)
 type -q nvim; and alias vim="nvim"
 type -q eza; and alias ls="eza --icons=always"
 type -q moor; and alias less="moor"
@@ -52,6 +52,9 @@ type -q batcat; and alias cat="batcat -p -P"
 
 # Init Zoxide
 type -q zoxide; and zoxide init fish --cmd j | source
+
+# Pretty root shell
+alias ssu="sudo --preserve-env=HOME -i"
 
 # Init starship prompt
 if type -q starship
