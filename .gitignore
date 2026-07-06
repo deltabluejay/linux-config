@@ -1,3 +1,4 @@
 config/firefox/profiles
 .DS_Store
 fish_variables
+fish_frozen_*
