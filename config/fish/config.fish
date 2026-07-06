@@ -56,7 +56,7 @@ type -q batcat; and alias cat="batcat -p -P"
 type -q zoxide; and zoxide init fish --cmd j | source
 
 # Pretty root shell
-alias ssu="sudo --preserve-env=HOME -i"
+alias ssu="sudo --preserve-env=HOME -s"
 
 # Init starship prompt
 if type -q starship
