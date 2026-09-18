@@ -18,5 +18,5 @@ end
 # NFS home directory makes fish really slow when the history file gets large
 # This will rotate the history file every month to keep files small
 if status is-interactive
-    set -gx fish_history fish_(date +%Y-%m)
+    set -gx fish_history fish_(date +%Y_%m)
 end
